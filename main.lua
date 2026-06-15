@@ -33,7 +33,6 @@ local function cursor_to_last(folder)
 end
 
 local inited = {}
-local cursor_log = {}
 
 local function setup()
 	ya.emit("sort", { by = "alphabetical", reverse = false })
@@ -50,25 +49,13 @@ local function setup()
 		end
 	end)
 
-	ps.sub("hover", function()
-		local folder = cx.active.current
-		if not folder or not folder.files or #folder.files == 0 then
-			return
-		end
-		local cwd = tostring(folder.cwd)
-		local cur = folder.cursor
-		local prev = cursor_log[cwd]
-		if prev == nil then
-			cursor_log[cwd] = cur
-			return
-		end
-		if cur ~= prev then
-			local delta = cur - prev
-			local n = #folder.files
-			folder.cursor = math.max(0, math.min(n - 1, cur - 2 * delta))
-			cursor_log[cwd] = folder.cursor
-		else
-			cursor_log[cwd] = cur
+	ps.sub("key", function(ev)
+		if ev.key == "up" then
+			ya.emit("arrow", { 1 })
+			return 3
+		elseif ev.key == "down" then
+			ya.emit("arrow", { -1 })
+			return 3
 		end
 	end)
 
