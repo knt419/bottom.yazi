@@ -1,4 +1,47 @@
-bottom.yazi
+# bottom.yazi
+
+A yazi plugin that displays the file/folder list in reverse order, aligned to the bottom.
+
+## Installation
+
+1. Install the plugin:
+
+```bash
+ya pkg add knt419/bottom
+```
+
+2. Add the following line to `~/.config/yazi/init.lua`:
+
+```lua
+require("bottom"):setup()
+```
+
+3. Add the following configuration to `~/.config/yazi/keymap.toml` to reverse arrow key behavior:
+
+```toml
+[[mgr.prepend_keymap]]
+on = "<Up>"
+run = "arrow 1"
+desc = "Move down (reversed for bottom-aligned)"
+
+[[mgr.prepend_keymap]]
+on = "<Down>"
+run = "arrow -1"
+desc = "Move up (reversed for bottom-aligned)"
+```
+
+- **Up arrow** → Cursor moves down (because rendering is reversed)
+- **Down arrow** → Cursor moves up (because rendering is reversed)
+
+## Behavior
+
+- File list is displayed in A→Z order, aligned to the bottom
+- Cursor is initially positioned at the last item
+- Parent directory list is also displayed in reverse order
+
+---
+
+# bottom.yazi
 
 yaziのファイル・フォルダリストを下寄せ・逆順に表示するプラグインです。
 
