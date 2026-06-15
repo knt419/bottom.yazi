@@ -49,16 +49,6 @@ local function setup()
 		end
 	end)
 
-	ps.sub("key", function(ev)
-		if ev.key == "up" then
-			ya.emit("arrow", { -1 })
-			return 3
-		elseif ev.key == "down" then
-			ya.emit("arrow", { 1 })
-			return 3
-		end
-	end)
-
 	local old_Current_redraw = Current.redraw
 	Current.redraw = function(self, ...)
 		local folder = self._folder
