@@ -51,10 +51,10 @@ local function setup()
 
 	ps.sub("key", function(ev)
 		if ev.key == "up" then
-			ya.emit("arrow", { 1 })
+			ya.emit("arrow", { -1 })
 			return 3
 		elseif ev.key == "down" then
-			ya.emit("arrow", { -1 })
+			ya.emit("arrow", { 1 })
 			return 3
 		end
 	end)
