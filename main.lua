@@ -29,14 +29,14 @@ local function cursor_to_last(folder)
 		return
 	end
 	folder.cursor = #folder.files - 1
-	ya.emit("arrow", { 1 })
+	ya.emit("arrow", { 0 })
 end
 
 local inited = {}
 local cursor_log = {}
 
 local function setup()
-	ya.emit("sort", { by = "alphabetical", reverse = true })
+	ya.emit("sort", { by = "alphabetical", reverse = false })
 
 	ps.sub("cd", function()
 		cursor_to_last(cx.active.current)
