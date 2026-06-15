@@ -29,7 +29,7 @@ local function cursor_to_last(folder)
 		return
 	end
 	folder.cursor = #folder.files - 1
-	ya.emit("arrow", { 0 })
+	ya.emit("arrow", { 1 })
 end
 
 local inited = {}
