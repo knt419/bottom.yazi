@@ -4,13 +4,19 @@ yaziのファイル・フォルダリストを下寄せ・逆順に表示する�
 
 ## インストール
 
-1. プラグインをyaziのプラグインディレクトリにコピーします：
+1. プラグインをインストールします：
 
 ```bash
-cp -r bottom.yazi ~/.config/yazi/plugins/
+ya pkg add knt419/bottom
 ```
 
-2. `keymap.toml` を `~/.config/yazi/keymap.toml` にコピーします：
+2. `~/.config/yazi/init.lua` に以下の行を追加します：
+
+```lua
+require("bottom"):setup()
+```
+
+3. `keymap.toml` を `~/.config/yazi/keymap.toml` にコピーします：
 
 ```bash
 cp keymap.toml ~/.config/yazi/keymap.toml
