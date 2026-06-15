@@ -16,15 +16,7 @@ ya pkg add knt419/bottom
 require("bottom"):setup()
 ```
 
-3. `keymap.toml` を `~/.config/yazi/keymap.toml` にコピーします：
-
-```bash
-cp keymap.toml ~/.config/yazi/keymap.toml
-```
-
-## keymap.toml の設定
-
-このプラグインは描画を上下反転させるため、矢印キーの動作も反転させなければなりません。`keymap.toml` に以下の設定が必要です：
+3. `~/.config/yazi/keymap.toml` に矢印キーを反転させる設定を追加します：
 
 ```toml
 [[mgr.prepend_keymap]]
