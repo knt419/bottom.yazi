@@ -1,5 +1,62 @@
 --- @since 26.5.6
 
+local function marker_style(file)
+	local marked = file:is_marked()
+	if marked == 1 then
+		return th.mgr.marker_marked
+	elseif marked == 0 and file:is_selected() then
+		return th.mgr.marker_selected
+	end
+	local yanked = file:is_yanked()
+	if yanked == 1 then
+		return th.mgr.marker_copied
+	elseif yanked == 2 then
+		return th.mgr.marker_cut
+	end
+end
+
+local function render_marker_reversed(area, folder, pad)
+	if area.w * area.h == 0 then
+		return {}
+	end
+	local window = folder.window
+	if not window or #window == 0 then
+		return {}
+	end
+
+	local elements = {}
+	local function append(last)
+		if not last[3] then
+			return
+		end
+		local y = math.min(area.y + last[1], area.y + area.h - 1)
+		local rect = ui.Rect {
+			x = area.x,
+			y = y,
+			w = 1,
+			h = math.min(1 + last[2] - last[1], area.y + area.h - y),
+		}
+		elements[#elements + 1] = ui.Bar(ui.Edge.LEFT):area(rect):style(last[3]):symbol(th.mgr.marker_symbol)
+	end
+
+	local n = #window
+	local last = { -1, -1, nil }
+	for idx = n, 1, -1 do
+		local f = window[idx]
+		local style = marker_style(f)
+		local visual_row = pad + (n - idx)
+
+		if last[2] == -1 or visual_row - last[2] > 1 or last[3] ~= style then
+			append(last)
+			last = { visual_row, visual_row, style }
+		else
+			last[2] = visual_row
+		end
+	end
+	append(last)
+	return elements
+end
+
 local function render_reversed(files, area)
 	local n = #files
 	local pad = math.max(0, area.h - n)
@@ -128,7 +185,7 @@ local function setup()
 		return ya.preview_widget(job, {
 			ui.List(left):area(job.area),
 			ui.Text(right):area(job.area):align(ui.Align.RIGHT),
-			table.unpack(Marker:new(marker_area, p_folder):redraw()),
+			table.unpack(render_marker_reversed(marker_area, p_folder, pad)),
 		})
 	end
 end
